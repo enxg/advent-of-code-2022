@@ -49,8 +49,6 @@ fn losing_move(mve: &str) -> &str {
     }
 }
 
-
-
 fn winning_move(mve: &str) -> &str {
     match mve {
         "A" => "B",
@@ -63,12 +61,10 @@ fn winning_move(mve: &str) -> &str {
 pub fn part_one(input: &str) -> Option<u32> {
     let mut points: u32 = 0;
 
-    input
-        .lines()
-        .for_each(|x| {
-            let moves: Vec<&str> = x.split(' ').collect();
-            points += shape_points(moves[1]) + round_points(moves[0], moves[1]);
-        });
+    input.lines().for_each(|x| {
+        let moves: Vec<&str> = x.split(' ').collect();
+        points += shape_points(moves[1]) + round_points(moves[0], moves[1]);
+    });
 
     Some(points)
 }
@@ -76,27 +72,25 @@ pub fn part_one(input: &str) -> Option<u32> {
 pub fn part_two(input: &str) -> Option<u32> {
     let mut points: u32 = 0;
 
-    input
-        .lines()
-        .for_each(|x| {
-            let data: Vec<&str> = x.split(' ').collect();
+    input.lines().for_each(|x| {
+        let data: Vec<&str> = x.split(' ').collect();
 
-            match data[1] {
-                "X" => {
-                    // Lose: 0 + shape
-                    points += shape_points(losing_move(data[0]))
-                }
-                "Y" => {
-                    // Draw: 3 + same shape
-                    points += 3 + shape_points(data[0])
-                }
-                "Z" => {
-                    // Win: 6 + shape
-                    points += 6 + shape_points(winning_move(data[0]))
-                }
-                _ => todo!(),
+        match data[1] {
+            "X" => {
+                // Lose: 0 + shape
+                points += shape_points(losing_move(data[0]))
             }
-        });
+            "Y" => {
+                // Draw: 3 + same shape
+                points += 3 + shape_points(data[0])
+            }
+            "Z" => {
+                // Win: 6 + shape
+                points += 6 + shape_points(winning_move(data[0]))
+            }
+            _ => todo!(),
+        }
+    });
 
     Some(points)
 }
